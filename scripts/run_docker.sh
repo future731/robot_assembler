@@ -50,7 +50,7 @@ docker run ${OPT}    \
     --name=${cname} \
     --volume="${PROG_DIR:-$DEFAULT_USER_DIR}:/userdir" \
     -w="/userdir" \
+    -u $(id -u ${USER}):$(id -g ${USER}) \
     ${iname} ${VAR}
-    # -u $(id -u ${USER}):$(id -g ${USER}) \
 
 xhost -local:
