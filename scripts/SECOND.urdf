@@ -213,6 +213,61 @@
      </geometry>
   </collision>
   </link>
+  <link name="LINKCAM"/>
+  <gazebo reference="LINKCAM">
+     <sensor type="multicamera" name="stereo_camera">
+        <update_rate>30.0</update_rate>
+        <camera name="left">
+           <horizontal_fov>1.3962634</horizontal_fov>
+           <image>
+              <width>800</width>
+              <height>600</height>
+              <format>R8G8B8</format>
+           </image>
+           <clip>
+              <near>0.02</near>
+              <far>300</far>
+           </clip>
+           <noise>
+              <type>gaussian</type>
+              <mean>0.0</mean>
+              <stddev>0.007</stddev>
+           </noise>
+        </camera>
+        <camera name="right">
+           <pose>0 0.2 0 0 0 0</pose>
+           <horizontal_fov>1.3962634</horizontal_fov>
+           <image>
+              <width>800</width>
+              <height>600</height>
+              <format>R8G8B8</format>
+           </image>
+           <clip>
+              <near>0.02</near>
+              <far>300</far>
+           </clip>
+           <noise>
+              <type>gaussian</type>
+              <mean>0.0</mean>
+              <stddev>0.007</stddev>
+           </noise>
+        </camera>
+        <plugin name="stereo_camera_controller" filename="libgazebo_ros_multicamera.so">
+           <alwaysOn>true</alwaysOn>
+           <updateRate>0.0</updateRate>
+           <cameraName>stereo_camera</cameraName>
+           <imageTopicName>image_raw</imageTopicName>
+           <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+           <frameName>camera_link</frameName>
+           <hackBaseline>0.07</hackBaseline>
+           <distortionK1>0.0</distortionK1>
+           <distortionK2>0.0</distortionK2>
+           <distortionK3>0.0</distortionK3>
+           <distortionT1>0.0</distortionT1>
+           <distortionT2>0.0</distortionT2>
+        </plugin>
+     </sensor>
+  </gazebo>
   <xacro:gazebo_transmission joint_name="JOINT0" />
   <joint name="JOINT0" type="revolute">
      <parent link="BASE"/>
@@ -252,6 +307,11 @@
      <origin xyz="0.019000 0.063250 -0.019000" rpy="0.95776124 1.57079633 0.95776124"/>
      <axis xyz="0 0 1"/>
      <limit effort="200" lower="-3.14159" upper="3.14159" velocity="40"/>
+  </joint>
+  <joint name="JOINTCAM" type="fixed">
+      <parent link="LINK4"/>
+      <child link="LINKCAM"/>
+      <origin xyz="0 0.03 0" rpy="0 0 1.5708"/>
   </joint>
 
   <!-- Gazebo plugin for ROS Control -->
