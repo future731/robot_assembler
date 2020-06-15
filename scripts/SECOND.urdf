@@ -214,6 +214,8 @@
   </collision>
   </link>
   <link name="LINKCAM"/>
+  <link name="LINKCAMOPT"/>
+
   <gazebo reference="LINKCAM">
      <sensor type="multicamera" name="stereo_camera">
         <update_rate>30.0</update_rate>
@@ -235,7 +237,7 @@
            </noise>
         </camera>
         <camera name="right">
-           <pose>0 0.2 0 0 0 0</pose>
+           <pose>0 -0.2 0 0 0 0</pose>
            <horizontal_fov>1.3962634</horizontal_fov>
            <image>
               <width>800</width>
@@ -258,7 +260,7 @@
            <cameraName>stereo_camera</cameraName>
            <imageTopicName>image_raw</imageTopicName>
            <cameraInfoTopicName>camera_info</cameraInfoTopicName>
-           <frameName>camera_link</frameName>
+           <frameName>LINKCAMOPT</frameName>
            <hackBaseline>0.07</hackBaseline>
            <distortionK1>0.0</distortionK1>
            <distortionK2>0.0</distortionK2>
@@ -312,6 +314,11 @@
       <parent link="LINK4"/>
       <child link="LINKCAM"/>
       <origin xyz="0 0.03 0" rpy="0 0 1.5708"/>
+  </joint>
+  <joint name="JOINTCAMOPT" type="fixed">
+      <parent link="LINKCAM"/>
+      <child link="LINKCAMOPT"/>
+      <origin xyz="0 0 0" rpy="-1.5708 0 -1.5708"/>
   </joint>
 
   <!-- Gazebo plugin for ROS Control -->
