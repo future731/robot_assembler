@@ -1,0 +1,17 @@
+<launch>
+<group ns="stereo_camera">
+    <node name="point_cloud2" pkg="stereo_image_proc" type="stereo_image_proc">
+    </node>
+</group>
+<group ns="ball">
+    <include file="$(find jsk_pcl_ros)/launch/hsi_color_filter.launch">
+        <arg name="INPUT" value="/stereo_camera/points2" />
+        <arg name="h_max" value="-82" />
+        <arg name="h_min" value="-86" />
+        <arg name="s_max" value="255" />
+        <arg name="s_min" value="223" />
+        <arg name="i_max" value="147" />
+        <arg name="i_min" value="0" />
+    </include>
+</group>
+</launch>

@@ -1,2 +1,4 @@
 #!/bin/bash
-ROS_NAMESPACE=stereo_camera rosrun stereo_image_proc stereo_image_proc
+apt-get update && apt-get install -y ros-melodic-jsk-pcl-ros
+source /opt/ros/melodic/setup.bash
+roslaunch third_stereo.launch
