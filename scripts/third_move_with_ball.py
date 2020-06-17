@@ -20,11 +20,8 @@ def move():
     traj_msg.trajectory.header.stamp = rospy.Time.now() + rospy.Duration(0.2)
     traj_msg.trajectory.joint_names = ['JOINT0', 'JOINT1', 'JOINT2', 'JOINT3', 'JOINT4']
     traj_msg.trajectory.points.append(
-            JointTrajectoryPoint(positions=[-1.0, 0, 1.0, 0.0, -1.0], #姿勢1
+            JointTrajectoryPoint(positions=[-1.0, 0, 1.0, 0.0, 0.0], #姿勢1
             time_from_start = rospy.Duration(1))) ## 前の姿勢から1sec
-    traj_msg.trajectory.points.append(
-            JointTrajectoryPoint(positions=[1.0, 0, -1.0, 0.0, 1.0], #姿勢1
-            time_from_start = rospy.Duration(2))) ## 前の姿勢から1sec
     act_client.send_goal(traj_msg)
     act_client.wait_for_result()
     rospy.signal_shutdown("move")
