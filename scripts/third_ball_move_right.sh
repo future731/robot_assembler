@@ -15,7 +15,7 @@ sleep 1
 
 rosservice call /gazebo/apply_body_wrench "body_name: 'ra_ball_large::link'
 wrench:
-  force: {x: 0.0, y: -10.0, z: 0.0}
+  force: {x: 1.2, y: -30.0, z: 0.0}
   torque: {x: 0.0, y: 0.0, z: 0.0}
 start_time: {secs: 0, nsecs: 0}
 duration: {secs: 0, nsecs: 10000000}"

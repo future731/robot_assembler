@@ -4,23 +4,29 @@ import rospy
 import actionlib
 import numpy as np
 import math
+import tf
 from control_msgs.msg import FollowJointTrajectoryAction, FollowJointTrajectoryGoal
 from trajectory_msgs.msg import JointTrajectoryPoint
 from geometry_msgs.msg import PoseArray
+from geometry_msgs.msg import PoseStamped
+
 
 rospy.init_node('send_motion')
+
+listener = tf.TransformListener()
+
 act_client = actionlib.SimpleActionClient('/fullbody_controller/follow_joint_trajectory', FollowJointTrajectoryAction)
 
 act_client.wait_for_server()
 
-def move():
+def move(pos=[-2.0, 0, 2.0, 0.0, 0.0]):
     print("move")
     # gen msg
     traj_msg = FollowJointTrajectoryGoal()
     traj_msg.trajectory.header.stamp = rospy.Time.now() + rospy.Duration(0.2)
     traj_msg.trajectory.joint_names = ['JOINT0', 'JOINT1', 'JOINT2', 'JOINT3', 'JOINT4']
     traj_msg.trajectory.points.append(
-            JointTrajectoryPoint(positions=[-1.0, 0, 1.0, 0.0, 0.0], #姿勢1
+            JointTrajectoryPoint(positions=pos, #姿勢1
             time_from_start = rospy.Duration(1))) ## 前の姿勢から1sec
     act_client.send_goal(traj_msg)
     act_client.wait_for_result()
@@ -39,18 +45,28 @@ def callback(msg):
     global index
     global moved
     global start_moving
+    global listener
     # outlier detection
     if not msg.poses:
         return
-    if index == 0 or (index != 0 and euc_distance(msg.poses[0].position, history[index - 1]) < 0.1):
-        history.append(msg.poses[0].position)
-        print(msg.poses[0].position)
+    pose_opt = msg.poses[0]
+    t = listener.getLatestCommonTime("/world", "/LINKCAMOPT")
+    pl = PoseStamped()
+    pl.header.frame_id = "LINKCAMOPT"
+    pl.pose = pose_opt
+    pose_world = listener.transformPose("/world", pl)
+    if index == 0 or (index != 0 and euc_distance(pose_world.pose.position, history[index - 1]) < 0.3):
+        print(pose_world.pose.position)
+        history.append(pose_world.pose.position)
         index = index + 1
 
     if index > 4 and euc_distance(history[index - 1], history[index - 10]) > 0.1:
         moved = True
         if not start_moving:
-            move()
+            if history[index - 1].x > 0:
+                move(pos=[-2.0, 0, 2.0, 0.0, 0.0])
+            else:
+                move(pos=[2.0, 0, -2.0, 0.0, 0.0])
         start_moving = True
 
 
