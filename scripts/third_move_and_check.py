@@ -17,13 +17,13 @@ traj_msg.trajectory.joint_names = ['JOINT0', 'JOINT1', 'JOINT2', 'JOINT3', 'JOIN
 
 ##
 traj_msg.trajectory.points.append(JointTrajectoryPoint(positions=[0, 0, 0, 0, 0], #姿勢1
-                                                       time_from_start = rospy.Duration(2))) ## 前の姿勢から2sec
-traj_msg.trajectory.points.append(JointTrajectoryPoint(positions=[2.0, 0, 2.0, -2.0, 0], #姿勢2
-                                                       time_from_start = rospy.Duration(6)))## 前の姿勢から4sec
-traj_msg.trajectory.points.append(JointTrajectoryPoint(positions=[0.20, 0, 0.20, -0.40, 0], #姿勢3
-                                                       time_from_start = rospy.Duration(10)))## 前の姿勢から4sec
-traj_msg.trajectory.points.append(JointTrajectoryPoint(positions=[0, 0, 0.15, -0.3, 0], #姿勢4
-                                                       time_from_start = rospy.Duration(12)))## 前の姿勢から2sec
+                                                       time_from_start = rospy.Duration(1))) ## 前の姿勢から2sec
+traj_msg.trajectory.points.append(JointTrajectoryPoint(positions=[-1.0, 0, 1.0, -1.0, 0], #姿勢2
+                                                       time_from_start = rospy.Duration(2)))## 前の姿勢から4sec
+traj_msg.trajectory.points.append(JointTrajectoryPoint(positions=[1.0, 0, -1.0, -1.0, 0], #姿勢3
+                                                       time_from_start = rospy.Duration(3)))## 前の姿勢から4sec
+traj_msg.trajectory.points.append(JointTrajectoryPoint(positions=[0, 0, 0, 0, 0], #姿勢4
+                                                       time_from_start = rospy.Duration(4)))## 前の姿勢から2sec
 
 # send to robot arm
 act_client.send_goal(traj_msg)
