@@ -1,2 +1,2 @@
 #!/bin/bash
-docker build -f Dockerfile -t yoheikakiuchi/robot_assembler .
+docker build --no-cache -f Dockerfile -t yoheikakiuchi/robot_assembler .
