@@ -46,15 +46,16 @@ def callback(msg):
     global moved
     global start_moving
     global listener
+    print("po")
     # outlier detection
     if not msg.poses:
         return
     pose_opt = msg.poses[0]
-    t = listener.getLatestCommonTime("/world", "/LINKCAMOPT")
+    t = listener.getLatestCommonTime("/robot1/world", "/robot1/LINKCAMOPT")
     pl = PoseStamped()
-    pl.header.frame_id = "LINKCAMOPT"
+    pl.header.frame_id = "robot1/LINKCAMOPT"
     pl.pose = pose_opt
-    pose_world = listener.transformPose("/world", pl)
+    pose_world = listener.transformPose("/robot1/world", pl)
     if index == 0 or (index != 0 and euc_distance(pose_world.pose.position, history[index - 1]) < 0.3):
         print(pose_world.pose.position)
         history.append(pose_world.pose.position)

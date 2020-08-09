@@ -28,7 +28,7 @@
 
     <arg name="namespace" value="robot2" />
     <arg name="robot_name" value="robot2" />
-    <arg name="gzangles" value="-x 0.3 -y 1.0 -z 0.3" />
+    <arg name="gzangles" value="-x 0.25 -y 3.0 -z 0.3" />
     <arg name="gzpose" value="-Y 1.5708" />
   </include>
 

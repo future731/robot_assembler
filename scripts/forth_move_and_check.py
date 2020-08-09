@@ -6,7 +6,7 @@ from control_msgs.msg import FollowJointTrajectoryAction, FollowJointTrajectoryG
 from trajectory_msgs.msg import JointTrajectoryPoint
 
 rospy.init_node('send_motion')
-act_client = actionlib.SimpleActionClient('/robot2/fullbody_controller/follow_joint_trajectory', FollowJointTrajectoryAction)
+act_client = actionlib.SimpleActionClient('/robot1/fullbody_controller/follow_joint_trajectory', FollowJointTrajectoryAction)
 
 act_client.wait_for_server()
 

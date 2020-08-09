@@ -1,11 +1,13 @@
 <launch>
-<group ns="stereo_camera">
-    <node name="point_cloud2" pkg="stereo_image_proc" type="stereo_image_proc">
-    </node>
+<group ns="robot1">
+    <group ns="stereo_camera">
+        <node name="point_cloud2" pkg="stereo_image_proc" type="stereo_image_proc">
+        </node>
+    </group>
 </group>
 <group ns="ball">
     <include file="$(find jsk_pcl_ros)/launch/hsi_color_filter.launch">
-        <arg name="INPUT" value="/stereo_camera/points2" />
+        <arg name="INPUT" value="/robot1/stereo_camera/points2" />
         <arg name="h_max" value="-82" />
         <arg name="h_min" value="-86" />
         <arg name="s_max" value="255" />
