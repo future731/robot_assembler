@@ -21,7 +21,8 @@ RUN apt-get update -q -qq \
 WORKDIR /catkin_ws
 
 RUN wstool init src https://github.com/agent-system/robot_assembler/raw/master/config/robot_assembler.rosinstall && \
-    wstool update -t src
+    sed -i 's@uri: https://github.com/agent-system/robot_assembler.git@uri: https://github.com/future731/robot_assembler.git\r    version: add_tf_prefix@' src/.rosinstall && \
+    wstool update --delete-changed-uris -t src
 
 RUN apt-get update -q -qq && \
     rosdep update -q -y && \
